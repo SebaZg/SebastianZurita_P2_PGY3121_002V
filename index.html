@@ -38,85 +38,46 @@
         </div>
     </div>
        <br><br><br>
-       <h1 style="text-align:center;">DASHBOARD</h1>
-        <br><br>
-       <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-              <table class="table" id="table_ultimo_sismo">
-                  <thead>
-                    <h5>Ultimo Sismo</h5>
-                    <tr>
-                      <th scope="col">Referencia</th>
-                      <th scope="col">Magnitud</th>
-                      <th scope="col">Latitud</th>
-                      <th scope="col">Longitud</th>
-                      <th scope="col">Hora</th>
-                    </tr>
-                  </thead>
-                  <tbody id="#tbody_ultimo_sismo">
-                  </tbody>
-              </table>
-          </div>
-          <div class="col-md-3"></div>
-          <div class="col-md-3">
-            <table class="table" id="table_ultimo_sismo">
-
-                <thead>
-                  <h5>Tsunami</h5>
-                  <tr>
-                    <th scope="col">Referencia</th>
-                    <th scope="col">Magnitud</th>
-                    <th scope="col">Latitud</th>
-                    <th scope="col">Longitud</th>
-                    <th scope="col">Hora</th>
-                  </tr>
-                </thead>
-                <tbody id="tbody_disasters">
-                </tbody>
-            </table>
-        </div>
-      </div>
-       </div>
-
-       <div class="container">
-         
-        <div class="row">
-          <div class="col-md-3">
-              <table class="table" id="table_ultimos_sismos">
-                  <thead>
-                    <h5>Onemi</h5>
-                    <tr>
-                      <th scope="col">Referencia</th>
-                      <th scope="col">Magnitud</th>
-                      <th scope="col">Latitud</th>
-                      <th scope="col">Longitud</th>
-                      <th scope="col">Hora</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tbody_disasters">
-                  </tbody>
-              </table>
-          </div>
-          <div class="col-md-3"></div>
-          <div class="col-md-3">
-            <table class="table" id="table_ultimos_sismos">
-                <thead>
-                  <h5>Ultimos 15 Sismos</h5>
-                  <tr>
-                    <th scope="col">Referencia</th>
-                    <th scope="col">Magnitud</th>
-                    <th scope="col">Latitud</th>
-                    <th scope="col">Longitud</th>
-                    <th scope="col">Hora</th>
-                  </tr>
-                </thead>
-                <tbody id="tbody_disasters">
-                </tbody>
-            </table>
-        </div>
-      </div>
-       </div>
+      </nav>
+			<div id="dashboard">
+				<div class="row my-5">
+					<div class="col-md-6">
+						<div class="card mx-auto" style="width: 25rem">
+							<div class="card-body" id="ultimos_sismos_chile">
+								<a href="./sistema_alerta.html"> <h5 class="card-title">Ultimos sismos</h5></a>
+								<ul></ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card mx-auto" style="width: 25rem">
+							<div class="card-body" id="tsunami_chile">
+								<a href="./sistema_alerta.html"><h5 class="card-title">Tsunamis</h5>
+								<ul></ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="card mx-auto" style="width: 25rem">
+							<div class="card-body" id="onemi">
+								<a href="./sistema_alerta.html"><h5 class="card-title">Onemi</h5>
+								<ul></ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card mx-auto" style="width: 25rem">
+							<div class="card-body" id="ultimos_sismos">
+								<a href="./sistema_alerta.html"><h5 class="card-title">Ultimos 15 sismos</h5>
+								<ul></ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
        
 
        <script>
