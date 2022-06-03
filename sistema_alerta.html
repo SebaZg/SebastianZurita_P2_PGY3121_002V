@@ -21,6 +21,7 @@
           <div class="navbar-nav">
             <a class="nav-item nav-link" href="index.html">Inicio </a>
             <a class="nav-item nav-link active" href="sistema_alerta.html">Sistema Alerta <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="Contacto.html">Contacto</a>
           </div>
         </div>
       </nav>
@@ -36,6 +37,8 @@
                                 <option value="0">Seleccione un tipo de alerta…</option>
                                 <option value="ultimos_sismos_chile">Últimos 15 terremotos</option>
                                 <option value="tsunami_chile">Últimos 16 boletines de Tsunami</option>
+                                <option value="onemi">ultimas alertas e informaciones de onemi</option>
+                                <option value="ultimos_sismos">ultimos sismos en el mundo</option>
                             </select>
                             <br>
                         </div> 
@@ -75,8 +78,13 @@
                 $("#tbody_disasters").append(createRowDisaster(reference, magnitude, latitude, longitude, local_time));
               })
               break;
-            case "ultimos_sismos_chile":
-              $.each(data.ultimos_sismos_chile, function(i, {reference, magnitude, latitude, longitude, local_time}){
+            case "onemi":
+              $.each(data.onemi, function(i, {reference, magnitude, latitude, longitude, local_time}){
+                $("#tbody_disasters").append(createRowDisaster(reference, magnitude, latitude, longitude, local_time));
+              })
+              break;
+              case "ultimos_sismos":
+              $.each(data.ultimos_sismos, function(i, {reference, magnitude, latitude, longitude, local_time}){
                 $("#tbody_disasters").append(createRowDisaster(reference, magnitude, latitude, longitude, local_time));
               })
               break;

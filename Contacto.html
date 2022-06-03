@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apoyo Prueba 2</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>   
+    <script src="js/script.js"></script>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Menú</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="index.html">Inicio <span class="sr-only">(current) </a>
+            <a class="nav-item nav-link" href="sistema_alerta.html">Sistema Alerta <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="Contacto.html">Contacto</a>  
+          </div>
+        </div>
+      </nav>
+      <br><br>
+
+    <script>
+      function mostrarMensaje(){
+          var nombre = document.getElementById("nombreUsuario").value;
+          var mensaje = "";
+          
+          if(nombre == "")
+             mensaje = "DEBE INGRESAR SU NOMBRE!!";
+          else
+             mensaje = "Bienvenido, "+nombre;
+
+             document.getElementById("lblNombre").innerHTML = mensaje;
+          //alert(mensaje);
+      }
+    </script>
+     <script>
+        function mostrarMensaje(){
+            var correoUsuario = document.getElementById("correoUsuario").value;
+            var mensaje = "";
+            
+            if(correoUsuario == "")
+               mensaje = "DEBE INGRESAR SU CORREO!!";
+            else
+               mensaje = "OK, "+correoUsuario;
+  
+               document.getElementById("lblCorreoUsuario").innerHTML = mensaje;
+            //alert(mensaje);
+        }
+      </script>
+       <script>
+        function mostrarMensaje(){
+            var comuna = document.getElementById("comuna").value;
+            var mensaje = "";
+            
+            if(comuna == "")
+               mensaje = "DEBE SELECCIONAR COMUNA!!";
+            else
+               mensaje = "OK, "+comuna;
+  
+               document.getElementById("id_comuna").innerHTML = mensaje;
+            //alert(mensaje);
+        }
+      </script>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <form>
+                    <fieldset>
+                    <legend>Formulario de contacto</legend>    
+                    <div class="form-group">
+                        <label id="lblNombre" for="nombreUsuario">Nombre</label>
+                        <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Ingrese su nombre..."></input>
+                        <br/>
+                        <label id="lblCorreoUsuario" for="correoUsuario">Correo Electronico</label>
+                        <input type="CorreoUsuario" class="form-control" id="correoUsuario" name="correoUsuario" placeholder="Ingrese su correo electronico..."></input>
+                        <br/>
+                        <label id="lbltelefonoContacto"for="telefonoContacto">Telefono de contacto</label>
+                        <input type="telefonoContacto" class="form-control" id="TelefonoContactoUsuario" name="TelefonoContactoUsuario" placeholder="Ingrese su telefono de contacto"></input>
+                        <br/>   
+                                        <div class="form-group">
+                                            <label for="id_region">Seleccione su región:</label>
+                                            <select id="id_region" class="form-control">
+                                                <option value="0">Seleccione una región...</option>
+                                            </select>
+                                            <br>
+                                            <label for="id_provincia">Seleccione su provincia:</label>
+                                            <select id="id_provincia" class="form-control">
+                                                <option value="0">Seleccione una provincia...</option>
+                                            </select>
+                                            <br>
+                                            <label for="id_comuna">Seleccione su comuna:</label>
+                                            <select id="id_comuna" class="form-control">
+                                                <option value="0">Seleccione una comuna...</option>
+                                            </select>
+                                            <br>
+                                            </div> 
+
+                                        </fieldset>
+										<input type="reset" value="Limpiar"></input>
+										<input type="submit" value="Enviar"></input>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>  
+                        
+                        <script >
+                            $(document).ready(function() {
+                                $.get("https://apps.gasco.cl/v1/locationService/regions/getAllRegions/",
+                                function(data){
+                                    $.each(data.data, function(i, {id, name, ordinal}){
+                                        $("#id_region").append('<option value="'+id+'">'+name+' ('+ordinal+')</option>');
+                                    })
+                                })
+                            }) 
+                    
+                            // variables
+                    
+                            var endpoint_region = "https://apps.gasco.cl/v1/locationService/provinces/byRegionId/"
+                    
+                            $('#id_region').change(function() {
+                                var selected_region = $('#id_region').val();
+                                $.get(endpoint_region+selected_region+"/",
+                                function(data){
+                                    // $("#id_provincia").html("<option value=\"0\">Seleccione una provincia...</option>");
+                                    $("#id_provincia").empty().append(new Option("Seleccione una provincia...", 0));
+                    
+                                    // $("#id_comuna").html("<option value=\"0\">Seleccione una comuna...</option>");
+                                    $("#id_comuna").empty().append(new Option("Seleccione una comuna...", 0));;
+                    
+                                    $.each(data.data, function(i, {id, name, regionId}){
+                                        $("#id_provincia").append(new Option(name, id));
+                                    })
+                                }) 
+                            })
+                    
+                            $('#id_provincia').change(function() {
+                                var selected_provincia = $('#id_provincia').val();
+                                var endpoint = "https://apps.gasco.cl/v1/locationService/communes/byProvinceId/"+selected_provincia+"/"
+                                $.get(endpoint,
+                                function(data){
+                                    $("#id_comuna").empty().append(new Option("Seleccione una comuna...", 0));
+                                    $.each(data.data, function(i, {id, name}){
+                                        $("#id_comuna").append(new Option(name, id));
+                                    })
+                                }) 
+                            })
+                    
+                      </script>
+                        <br/>
+                    </div> 
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
