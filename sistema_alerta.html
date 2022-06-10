@@ -4,41 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apoyo Prueba 2</title>
+    <title>Eventos Geologicos Chile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>   
     <script src="js/script.js"></script>
 </head>
-<body>
+<body class="lead">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Menú</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link" href="index.html">Inicio </a>
-            <a class="nav-item nav-link active" href="sistema_alerta.html">Sistema Alerta <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="Contacto.html">Contacto</a>
-          </div>
+      <a class="navbar-brand" href="#">Menú</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="index.html">Inicio </a>
+          <a class="nav-item nav-link active" href="sistema_alerta.html">Sistema Alerta <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="contacto.html">Contacto</a>
         </div>
-      </nav>
+      </div>
+     
+    </nav>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <form id="form1" name="form1" action="#">
-                    <fieldset>
+                    <fieldset>                        
                         <legend>Sistema de alerta</legend>    
                         <div class="form-group">
                             <label for="id_alerta">Tipo de alerta:</label>
+                            <p id="demo" style="font-size: 12px; float: right;"></p>
                             <select id="id_alerta" class="form-control">
-                                <option value="0">Seleccione un tipo de alerta…</option>
-                                <option value="ultimos_sismos_chile">Últimos 15 terremotos</option>
+                                <option value="0">Seleccione un tipo de alerta...</option>
+                                <option value="ultimos_sismos_chile">Últimos 15 sismos en Chile</option>
                                 <option value="tsunami_chile">Últimos 16 boletines de Tsunami</option>
-                                <option value="onemi">ultimas alertas e informaciones de onemi</option>
-                                <option value="ultimos_sismos">ultimos sismos en el mundo</option>
+                                <option value="onemi">Ultimas alertas e informaciones de Onemi</option>
+                                <option value="ultimos_sismos">Últimos sismos del Mundo</option>
                             </select>
                             <br>
                         </div> 
@@ -49,13 +51,22 @@
         <div class="row">
             <div class="col-md-12">
                 <table class="table" id="table_ultimos_sismos">
-                    <thead>
+                    <thead id="sismos_header" hidden>
                       <tr>
                         <th scope="col">Referencia</th>
                         <th scope="col">Magnitud</th>
                         <th scope="col">Latitud</th>
                         <th scope="col">Longitud</th>
                         <th scope="col">Hora</th>
+                      </tr>
+                    </thead>
+                    <thead id="onemi_header" hidden>
+                      <tr>
+                        <th scope="col">Ubicacion</th>
+                        <th scope="col">Info</th>
+                        <th scope="col">Hora</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">URL</th>
                       </tr>
                     </thead>
                     <tbody id="tbody_disasters">
@@ -65,38 +76,47 @@
         </div>
     </div>
    
-    <script>
-      $('#id_alerta').change(function() {
-        var alerta_value = $("#id_alerta").val();
-        $.get(getBasePath(alerta_value),
-        function(data) {
-          //console.log(data)
-          $("#tbody_disasters tr").remove();
-          switch (alerta_value) {
-            case "ultimos_sismos_chile":
-              $.each(data.ultimos_sismos_chile, function(i, {reference, magnitude, latitude, longitude, local_time}){
-                $("#tbody_disasters").append(createRowDisaster(reference, magnitude, latitude, longitude, local_time));
-              })
-              break;
-            case "tsunami_chile":
-              $.each(data.tsunami_chile, function(i, {reference, magnitude, latitude, longitude, local_time}){
-                $("#tbody_disasters").append(createRowDisaster(reference, magnitude, latitude, longitude, local_time));
-              })
-              break;
-            case "onemi":
-              $.each(data.onemi, function(i, {reference, magnitude, latitude, longitude, local_time}){
-                $("#tbody_disasters").append(createRowDisaster(reference, magnitude, latitude, longitude, local_time));
-              })
-              break;
-              case "ultimos_sismos":
-              $.each(data.ultimos_sismos, function(i, {reference, magnitude, latitude, longitude, local_time}){
-                $("#tbody_disasters").append(createRowDisaster(reference, magnitude, latitude, longitude, local_time));
-              })
-              break;
-          }
-        })
+  <script>
+    $('#id_alerta').change(function() {
+      var alerta_value = $("#id_alerta").val();
+      $('#sismos_header').removeAttr('hidden');
+      $('#onemi_header').removeAttr('hidden');
+      $('#sismos_header').hide();
+      $('#onemi_header').hide();
+      $.get(getBasePath(alerta_value),
+      function(data) {
+        //console.log(data)
+        $("#tbody_disasters tr").remove();
+        switch (alerta_value) {
+          case "tsunami_chile":
+            $('#sismos_header').show();
+            $.each(data.tsunami_chile, function(i, {reference, magnitude, latitude, longitude, local_time}){
+              $("#tbody_disasters").append(createRowDisaster(reference, magnitude, latitude, longitude, local_time));
+            })
+          break;
+          case "ultimos_sismos_chile":
+            $('#sismos_header').show();
+            $.each(data.ultimos_sismos_chile, function(i, {reference, magnitude, latitude, longitude, local_time}){
+              $("#tbody_disasters").append(createRowDisaster(reference, magnitude, latitude, longitude, local_time));
+            })
+          break;
+          case "onemi":
+            $('#onemi_header').show();
+            $.each(data.onemi, function(i, {alert_region, post_title, alert_date, state, url}){
+              var real_url = url.replace("http://www.onemi.cl","")
+              $("#tbody_disasters").append(createRowDisasterUrl(alert_region, post_title, alert_date, state, real_url));
+            })
+          break;
+          case "ultimos_sismos":
+            $('#sismos_header').show();
+            $.each(data.ultimos_sismos, function(i, {reference, magnitude, latitude, longitude, utc_time}){
+              $("#tbody_disasters").append(createRowDisaster(reference, magnitude, latitude, longitude, utc_time));
+            })
+          break;
+        }
       })
-
+    })
   </script>
+ 
 </body>
 </html>

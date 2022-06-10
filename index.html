@@ -30,7 +30,7 @@
     <div class="container-fluid">
         <div class="row">
           <div class="col-md-1"></div>
-            <div class="col-md-10 ">
+            <div class="col-md-10 " >
               <img src="Imagenes/Mundo.jpg" class="rounded mx-auto d-block img-fluid" alt="...">
                 
             </div>
@@ -79,10 +79,34 @@
 			</div>
 		</div>
        
-
-       <script>
-        $(document).ready(() => onInitIndex());
-      </script>
+		<script>
+    
+			$.get('https://chilealerta.com/api/query/?user=demo&select=ultimos_sismos&limit=1/',
+			function(data){
+			  let element = document.getElementById('ultimos_sismos')
+				element.innerHTML = `<p>${data['ultimos_sismos'][0].reference}</p> <p>${data['ultimos_sismos'][0].magnitude}</p>`;
+			})
+		
+		
+			$.get('https://chilealerta.com/api/query/?user=demo&select=tsunami_chile&limit=1/',
+			function(data){
+			  let element = document.getElementById('Tsunamis')
+				element.innerHTML = `<p>${data['tsunami_chile'][0].reference}</p> <p>${data['tsunami_chile'][0].local_time}</p>`;
+			})
+		
+			$.get('https://chilealerta.com/api/query/?user=demo&select=onemi&limit=1',
+			function(data){
+			  let element = document.getElementById('onemi')
+				element.innerHTML = `<p>${data['onemi'][0].state}</p> <p>${data['onemi'][0].alert_region}</p>`;
+			})
+		
+			$.get('https://chilealerta.com/api/query/?user=andr3iss&select=ultimos_sismos_chile&limit=1',
+			function(data){
+			  let element = document.getElementById('ultimos_sismos_chile')
+				element.innerHTML = `<p>${data['ultimos_sismos_chile'][0].reference}</p> <p>${data['ultimos_sismos_chile'][0].magnitude}</p>`;
+			})
+			
+		  </script>
 
 </body>
 </html>
